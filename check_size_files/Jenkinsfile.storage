@@ -1,0 +1,26 @@
+pipeline {
+    agent {
+        label('terraform')
+    }
+    environment{
+        AWS_ACCESS_KEY_ID = credentials('aws_secret_user')
+        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_pass') 
+    }
+    triggers {
+        cron('*/10 * * * *')
+    } 
+    options { 
+        disableConcurrentBuilds()
+        timeout(time: 3, unit: 'MINUTES')
+        timestamps()
+    }
+    stages {
+        stage('Check Size') {
+            steps {
+                dir('Chec_size_files') {
+                    sh 'sh check_size_bucket.sh'
+                }
+            }
+        }            
+    }
+}
