@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Check Size') {
             steps {
-                dir('Chec_size_files') {
+                dir('Check_size_files') {
                     sh 'sh check_size_bucket.sh'
                 }
             }
